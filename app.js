@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const userRoutes = require("./routes/user");
+const cors = require("cors");
 
 mongoose
   .connect(
@@ -10,6 +12,9 @@ mongoose
   .catch((error) => console.log("Connexion à MongoDB échouée :", error));
 
 app.use(express.json());
+app.use(cors());
+
+app.use("/api/auth", userRoutes);
 
 app.use((req, res) => {
   res.json({ message: "Server response" });
